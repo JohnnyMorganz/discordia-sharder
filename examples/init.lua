@@ -6,15 +6,15 @@ local ipc_emitter, shard_emitter, write = sharder.ipc_emitter, sharder.shard_emi
 
 -- Shard Emitter Functionalities
 
-shard_emitter:on('data', function(data)
+shard_emitter:on('data', function(firstShardID, lastShardID, data)
   -- handle data
 end)
 
-shard_emitter:on('error', function(error)
+shard_emitter:on('error', function(firstShardID, lastShardID, error)
   -- handle error
 end)
 
-shard_emitter:on('dead', function()
+shard_emitter:on('dead', function(firstShardID, lastShardID)
   -- handle restart
 end)
 
