@@ -28,12 +28,12 @@ local logFile
 local serverWrite
 
 local function loadServer()
-  print("LOADING IPC SERVER")
+  print('LOADING IPC SERVER')
   net.createServer(sharding_options.port, function(read, write)
     serverWrite = write
     coroutine.wrap(function()
       for data in read do
-        ipc_emitter:emit("data", data)
+        ipc_emitter:emit('data', data)
       end
     end)()
   end)
@@ -54,9 +54,9 @@ local function runShard(...)
   })
 
   local function readstdout()
-    local line = {nil, ' | ', format("Shards %s to %s", args[3], args[4]), ' | ', nil}
+    local line = {nil, ' | ', format('Shards %s to %s', args[3], args[4]), ' | ', nil}
     for data in child.stdout.read do
-      shard_emitter:emit("data", args[3], args[4], data)
+      shard_emitter:emit('data', args[3], args[4], data)
       if not sharding_options.silent then
         print(data)
       end
@@ -72,15 +72,15 @@ local function runShard(...)
   end
 
   local function readstderr()
-    local line = {nil, ' | ', format("Shards %s to %s", args[3], args[4]), ' | ', nil}
+    local line = {nil, ' | ', format('Shards %s to %s', args[3], args[4]), ' | ', nil}
     for data in child.stderr.read do
-      shard_emitter:emit("error", args[3], args[4], data)
+      shard_emitter:emit('error', args[3], args[4], data)
       if not sharding_options.silent then
-        print("----------------------")
-        print(format("Process Error: Shards %s to %s", args[3], args[4]))
-        print("----------------------")
+        print('----------------------')
+        print(format('Process Error: Shards %s to %s', args[3], args[4]))
+        print('----------------------')
         print(data)
-        print("----------------------")
+        print('----------------------')
       end
 
       if logFile then
@@ -95,7 +95,7 @@ local function runShard(...)
   end
 
   split(readstdout, readstderr, child.waitExit)
-  shard_emitter:emit("dead", args[3], args[4])
+  shard_emitter:emit('dead', args[3], args[4])
   if sharding_options.autoRestart then
     runShard(...)
   end
@@ -119,7 +119,7 @@ return function (file, options)
   local processes = math.ceil(sharding_options.maxShards / sharding_options.shardsPerProcess)
 
   for _ = 1, processes do
-    print("----------------------")
+    print('----------------------')
     if not last then break end
 
     first = last + 1
@@ -135,8 +135,8 @@ return function (file, options)
       break
     end
 
-    print("Starting Process")
-    print("First Shard:", first, "Last Shard:", last)
+    print('Starting Process')
+    print('First Shard:', first, 'Last Shard:', last)
 
     local args = sharding_options.arguments or {}
     coroutine.wrap(runShard)(file, sharding_options.port, first, last, sharding_options.maxShards, unpack(args))
