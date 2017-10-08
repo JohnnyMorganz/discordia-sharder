@@ -137,7 +137,7 @@ return function (file, options)
 
     print('Starting Process')
     print('First Shard:', first, 'Last Shard:', last)
-
+    shard_emitter:emit('start', first, last)
     local args = sharding_options.arguments or {}
     coroutine.wrap(runShard)(file, sharding_options.port, first, last, sharding_options.maxShards, unpack(args))
     timer.sleep(sharding_options.waitTime)

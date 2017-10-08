@@ -6,6 +6,10 @@ local ipc_emitter, shard_emitter, write = sharder.ipc_emitter, sharder.shard_emi
 
 -- Shard Emitter Functionalities
 
+shard_emitter:on('start', function(firstShardID, lastShardID)
+  -- handle start
+end)
+
 shard_emitter:on('data', function(firstShardID, lastShardID, data)
   -- handle data
 end)
