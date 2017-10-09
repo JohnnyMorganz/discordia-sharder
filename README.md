@@ -6,8 +6,11 @@ This is useful for larger bots where the need for more memory is required, great
 ## Usage
 
 Place the **discordia-sharder** file in your deps folder.
-To use the sharder, all you have to do is require the sharder and pass your data to the module:
-`require('discordia-sharder')(file, options)`
+To use the sharder, all you have to do is require the sharder and pass your data to the module in a coroutine:
+```lua
+local sharder = require('discordia-sharder')
+local shard_data = coroutine.wrap(sharder, file, options)()
+```
 
 ### `file`: string
 The path to your bot file which needs sharding

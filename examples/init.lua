@@ -1,8 +1,9 @@
-local sharder = require('discordia-sharder')('bot.lua', {
+local sharder = require('discordia-sharder')
+local shard_data = coroutine.wrap(sharder, 'bot.lua', {
   -- Options go here
-})
+})()
 
-local ipc_emitter, shard_emitter, write = sharder.ipc_emitter, sharder.shard_emitter, sharder.write
+local ipc_emitter, shard_emitter, write = shard_data.ipc_emitter, shard_data.shard_emitter, shard_data.write
 
 -- Shard Emitter Functionalities
 
